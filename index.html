@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MATRIX DE COLOMBIA & INSTRUNET S.A.S.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --azul:    #003B6F;
+      --azul2:   #005AA8;
+      --dorado:  #C8973A;
+      --claro:   #F4F7FB;
+      --texto:   #1A2333;
+      --gris:    #6B7A8D;
+      --verde-wa:#25D366;
+      --radius:  12px;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--claro);
+      color: var(--texto);
+      min-height: 100dvh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul2) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 2.5rem 1.25rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(200,151,58,.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    header img.logo {
+      height: 72px;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+      margin-bottom: .9rem;
+    }
+    header h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.3rem, 5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: .03em;
+      line-height: 1.15;
+    }
+    header p.nit {
+      font-size: .82rem;
+      opacity: .75;
+      margin-top: .35rem;
+      letter-spacing: .06em;
+    }
+
+    /* ── CONTACTO ── */
+    .contact-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .7rem;
+      padding: 1.2rem 1rem;
+      background: #fff;
+      border-bottom: 2px solid var(--claro);
+    }
+    .contact-bar a {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .55rem 1.1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: .88rem;
+      text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .contact-bar a:active { transform: scale(.96); }
+    .contact-bar a.tel {
+      background: var(--azul);
+      color: #fff;
+    }
+    .contact-bar a.wa {
+      background: var(--verde-wa);
+      color: #fff;
+    }
+    .contact-bar a svg { flex-shrink: 0; }
+
+    /* ── SECCIONES ── */
+    main { max-width: 680px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+    section { margin-bottom: 2rem; }
+
+    /* imagen software */
+    .software-img {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 24px rgba(0,59,111,.12);
+      display: block;
+    }
+    .software-caption {
+      text-align: center;
+      font-size: .8rem;
+      color: var(--gris);
+      margin-top: .5rem;
+      font-style: italic;
+    }
+
+    /* descarga */
+    .download-card {
+      background: #fff;
+      border: 1.5px solid #dde5f0;
+      border-radius: var(--radius);
+      padding: 1.4rem 1.2rem 1.6rem;
+    }
+    .download-card h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--azul);
+      margin-bottom: 1rem;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .7rem;
+      margin-bottom: 1.4rem;
+    }
+    @media (max-width: 400px) {
+      .steps { grid-template-columns: 1fr; }
+    }
+    .step {
+      background: var(--claro);
+      border-radius: 8px;
+      padding: .8rem .7rem;
+      text-align: center;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--azul);
+      color: #fff;
+      font-weight: 700;
+      font-size: .85rem;
+      margin-bottom: .45rem;
+    }
+    .step h3 { font-size: .82rem; font-weight: 700; margin-bottom: .2rem; }
+    .step p  { font-size: .75rem; color: var(--gris); }
+
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      width: 100%;
+      padding: .95rem 1rem;
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul2) 100%);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity .15s, transform .15s;
+    }
+    .btn-download:active { opacity: .88; transform: scale(.98); }
+    .btn-note {
+      text-align: center;
+      font-size: .72rem;
+      color: var(--gris);
+      margin-top: .55rem;
+    }
+
+    /* mapa */
+    .map-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,59,111,.1);
+    }
+    .map-wrap iframe {
+      width: 100%;
+      height: 260px;
+      border: 0;
+      display: block;
+    }
+    .map-address {
+      background: #fff;
+      padding: .75rem 1rem;
+      font-size: .85rem;
+      color: var(--texto);
+      border-top: 1px solid #eef0f4;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    /* QR */
+    .qr-section {
+      text-align: center;
+    }
+    .qr-section h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--azul);
+      margin-bottom: .9rem;
+    }
+    .qr-section img {
+      width: 180px;
+      height: 180px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,59,111,.15);
+    }
+
+    /* formulario */
+    .form-card {
+      background: #fff;
+      border: 1.5px solid #dde5f0;
+      border-radius: var(--radius);
+      padding: 1.4rem 1.2rem;
+    }
+    .form-card h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--azul);
+      margin-bottom: 1rem;
+    }
+    .form-card label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--gris);
+      margin-bottom: .25rem;
+    }
+    .form-card input,
+    .form-card textarea {
+      width: 100%;
+      padding: .65rem .85rem;
+      border: 1.5px solid #cdd6e4;
+      border-radius: 7px;
+      font-family: inherit;
+      font-size: .9rem;
+      color: var(--texto);
+      background: var(--claro);
+      margin-bottom: .85rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .form-card input:focus,
+    .form-card textarea:focus { border-color: var(--azul2); background: #fff; }
+    .form-card textarea { resize: vertical; min-height: 80px; }
+    .btn-send {
+      width: 100%;
+      padding: .85rem;
+      background: var(--dorado);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+    .btn-send:active { opacity: .85; }
+    .form-note {
+      font-size: .75rem;
+      color: var(--gris);
+      text-align: center;
+      margin-top: .6rem;
+    }
+    #form-ok {
+      display: none;
+      background: #e8f9ef;
+      color: #1a7a3c;
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      font-size: .88rem;
+      font-weight: 600;
+      text-align: center;
+      margin-top: .7rem;
+    }
+
+    /* pie */
+    footer {
+      background: var(--azul);
+      color: rgba(255,255,255,.7);
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: .78rem;
+      line-height: 1.7;
+    }
+    footer strong { color: #fff; }
+    .sep { color: rgba(255,255,255,.3); margin: 0 .3em; }
+
+    /* section titles */
+    .sec-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--azul);
+      margin-bottom: .8rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ENCABEZADO -->
+<header>
+  <img class="logo" src="https://mx-ia.github.io/F/Ali.png" alt="Logo Matrix de Colombia" />
+  <h1>MATRIX DE COLOMBIA<br>&amp; INSTRUNET S.A.S.</h1>
+  <p class="nit">NIT 900199738-6</p>
+</header>
+
+<!-- BARRA DE CONTACTO -->
+<div class="contact-bar">
+  <a class="tel" href="tel:+573127428547">
+    <!-- Ícono teléfono inline -->
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92z"/>
+    </svg>
+    312 742 8547
+  </a>
+  <a class="wa" href="https://wa.me/573003468551" target="_blank" rel="noopener">
+    <!-- Ícono WhatsApp inline -->
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L0 24l6.335-1.51A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.007-1.373l-.36-.213-3.76.897.934-3.667-.235-.376A9.818 9.818 0 1 1 12 21.818z"/>
+    </svg>
+    300 346 8551
+  </a>
+  <a class="wa" href="https://wa.me/573226649150" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.858L0 24l6.335-1.51A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.007-1.373l-.36-.213-3.76.897.934-3.667-.235-.376A9.818 9.818 0 1 1 12 21.818z"/>
+    </svg>
+    322 664 9150
+  </a>
+</div>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main>
+
+  <!-- Imagen software -->
+  <section>
+    <img class="software-img" src="https://mx-ia.github.io/F/software.png" alt="Software Matrix – Gobierno de la Empresa" />
+    <p class="software-caption">Software Matrix — Gobierno de la Empresa</p>
+  </section>
+
+  <!-- Descarga -->
+  <section class="download-card">
+    <h2>⇓ Descarga el Software</h2>
+    <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem;">
+      Sin instalación ni técnicos. Descarga el ZIP, descomprímelo y haz doble clic.<br>
+      Funciona en cualquier PC con Windows 10 u 11.
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Descarga el ZIP</h3>
+        <p>Haz clic en el botón de abajo</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Descomprime</h3>
+        <p>Clic derecho → Extraer aquí</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Ejecuta</h3>
+        <p>Doble clic en el programa</p>
+      </div>
+    </div>
+    <a class="btn-download" href="https://github.com/mxdco/L/releases/latest/download/sistema.zip">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      DESCARGAR SISTEMA MATRIX
+    </a>
+    <p class="btn-note">Windows 10 / 11 · Portable, sin instalador · Tus datos quedan en tu PC</p>
+  </section>
+
+  <!-- Ubicación -->
+  <section>
+    <p class="sec-title">📍 Nuestra Ubicación</p>
+    <div class="map-wrap">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.244509873197!2d-75.579481925968!3d6.248407993749!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e4428f3b7e4b5b7%3A0x8f1a3c8d4e5f6a7b!2sCalle%2045%20%2357A-16%2C%20Medell%C3%ADn%2C%20Antioquia!5e0!3m2!1ses!2sco!4v1700000000000"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación Matrix de Colombia">
+      </iframe>
+      <div class="map-address">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        Calle 45 # 57A-16, Piso 3 · Medellín, Antioquia, Colombia
+      </div>
+    </div>
+  </section>
+
+  <!-- QR -->
+  <section class="qr-section">
+    <h2 class="sec-title">Escanea nuestro QR</h2>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://mx-ia.github.io/F/" alt="QR Matrix de Colombia" />
+  </section>
+
+  <!-- Formulario asesoría -->
+  <section class="form-card">
+    <h2>¡Agenda tu Asesoría Gratuita!</h2>
+    <label for="nombre">Nombre completo</label>
+    <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="name" />
+    <label for="celular">Número de celular</label>
+    <input type="tel" id="celular" placeholder="300 000 0000" autocomplete="tel" />
+    <label for="mensaje">Mensaje (opcional)</label>
+    <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+    <button class="btn-send" onclick="enviarAsesoria()">ENVIAR Y AGENDAR ASESORÍA</button>
+    <p class="form-note">Te contactaremos lo más pronto posible.<br>Email: <strong>matrixdecolombia@gmail.com</strong></p>
+    <div id="form-ok">✅ ¡Mensaje enviado! Pronto te contactamos.</div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>MATRIX DE COLOMBIA &amp; INSTRUNET S.A.S.</strong><br>
+  NIT 900199738-6<span class="sep">·</span>Calle 45 # 57A-16 Piso 3<span class="sep">·</span>Medellín, Colombia<br>
+  © 2026 Todos los derechos reservados
+</footer>
+
+<script>
+  function enviarAsesoria() {
+    const nombre  = document.getElementById('nombre').value.trim();
+    const celular = document.getElementById('celular').value.trim();
+    const mensaje = document.getElementById('mensaje').value.trim();
+    if (!nombre || !celular) {
+      alert('Por favor ingresa tu nombre y número de celular.');
+      return;
+    }
+    const texto = `Hola, soy ${nombre} (${celular}). ${mensaje ? 'Mensaje: ' + mensaje : 'Quiero agendar una asesoría gratuita.'}`;
+    window.open('https://wa.me/573003468551?text=' + encodeURIComponent(texto), '_blank');
+    document.getElementById('form-ok').style.display = 'block';
+  }
+</script>
+</body>
+</html>
