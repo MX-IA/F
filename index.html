@@ -307,6 +307,89 @@
     footer strong { color: #fff; }
     .sep { color: rgba(255,255,255,.3); margin: 0 .3em; }
 
+    /* ── MANUAL SLIDER ── */
+    .manual-slider-wrap {
+      background: var(--azul);
+      padding: .9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .8rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .manual-slider-left {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      flex-shrink: 0;
+    }
+    .manual-icon-wrap {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.13);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .manual-icon-wrap svg { width: 20px; height: 20px; }
+    .manual-labels span {
+      display: block;
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+    .manual-labels .ml-title {
+      font-size: 1rem; font-weight: 800; letter-spacing: .03em; line-height: 1.1;
+    }
+    .manual-labels .ml-sub {
+      font-size: .72rem; opacity: .65; font-weight: 400; margin-top: .08rem;
+    }
+
+    /* Track + thumb */
+    .slider-track-wrap {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: .28rem;
+    }
+    .slider-hint {
+      font-size: .65rem;
+      color: rgba(255,255,255,.5);
+      text-align: right;
+      letter-spacing: .04em;
+    }
+    .manual-range {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+      border-radius: 50px;
+      background: rgba(255,255,255,.18);
+      outline: none;
+      cursor: pointer;
+    }
+    .manual-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--dorado);
+      cursor: pointer;
+      transition: transform .12s;
+    }
+    .manual-range:active::-webkit-slider-thumb { transform: scale(1.15); }
+    .manual-range::-moz-range-thumb {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--dorado);
+      cursor: pointer;
+    }
+    /* progress fill vía JS */
+    .manual-range.filled {
+      background: linear-gradient(to right, var(--dorado) 0%, var(--dorado) var(--pct), rgba(255,255,255,.18) var(--pct), rgba(255,255,255,.18) 100%);
+    }
+
     /* section titles */
     .sec-title {
       font-family: 'Barlow Condensed', sans-serif;
@@ -352,6 +435,29 @@
   </a>
 </div>
 
+<!-- MANUAL SLIDER BAR -->
+<div class="manual-slider-wrap">
+  <div class="manual-slider-left">
+    <div class="manual-icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+    </div>
+    <div class="manual-labels">
+      <span class="ml-title">Manual del Usuario</span>
+      <span class="ml-sub">Desliza para descargar el PDF</span>
+    </div>
+  </div>
+  <div class="slider-track-wrap">
+    <span class="slider-hint" id="slider-hint">← desliza</span>
+    <input type="range" class="manual-range" id="manualSlider" min="0" max="100" value="0" />
+  </div>
+</div>
+
 <!-- CONTENIDO PRINCIPAL -->
 <main>
 
@@ -385,7 +491,7 @@
         <p>Doble clic en el programa</p>
       </div>
     </div>
-    <a class="btn-download" href="https://github.com/mxdco/L/releases/latest/download/sistema.zip">
+    <a class="btn-download" href="https://github.com/mx-ia/F/releases/latest/download/sistema.zip">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7 10 12 15 17 10"/>
@@ -457,6 +563,48 @@
     window.open('https://wa.me/573003468551?text=' + encodeURIComponent(texto), '_blank');
     document.getElementById('form-ok').style.display = 'block';
   }
+
+  /* ── Slider Manual ── */
+  (function() {
+    const slider = document.getElementById('manualSlider');
+    const hint   = document.getElementById('slider-hint');
+    let triggered = false;
+
+    function updateTrack(val) {
+      slider.style.setProperty('--pct', val + '%');
+      slider.classList.add('filled');
+    }
+
+    slider.addEventListener('input', function() {
+      const val = parseInt(this.value);
+      updateTrack(val);
+      if (val >= 80 && !triggered) {
+        triggered = true;
+        hint.textContent = '¡Descargando!';
+        hint.style.color = '#C8973A';
+        setTimeout(function() {
+          const a = document.createElement('a');
+          a.href = 'MANUAL_MATRIX_ACTUALIZADO.pdf';
+          a.download = 'Manual_Usuario_Matrix.pdf';
+          a.click();
+        }, 250);
+        setTimeout(function() {
+          slider.value = 0;
+          updateTrack(0);
+          triggered = false;
+          hint.textContent = '← desliza';
+          hint.style.color = '';
+        }, 1800);
+      } else if (val < 80) {
+        triggered = false;
+        hint.textContent = val > 40 ? '¡casi!' : '← desliza';
+        hint.style.color = '';
+      }
+    });
+
+    slider.addEventListener('mouseup',  function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
+    slider.addEventListener('touchend', function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
+  })();
 </script>
 </body>
 </html>
