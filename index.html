@@ -466,7 +466,7 @@
   </div>
 </div>
 
-<!-- ========== NUEVA BARRA: COMPROMISO DE TRANSPARENCIA ========== -->
+<!-- BARRA: COMPROMISO DE TRANSPARENCIA -->
 <div class="manual-slider-wrap transparencia">
   <div class="manual-slider-left">
     <div class="manual-icon-wrap">
@@ -613,8 +613,8 @@
         hint.style.color = '#C8973A';
         setTimeout(function() {
           const a = document.createElement('a');
-          a.href = 'Manual_Usuario_Matrix.pdf';
-          a.download = 'Manual_Usuario_Matrix.pdf';
+          a.href = 'MANUAL_MATRIX_ACTUALIZADO.pdf';
+          a.download = 'MANUAL_MATRIX_ACTUALIZADO.pdf';
           a.click();
         }, 250);
         setTimeout(function() {
@@ -635,7 +635,7 @@
     slider.addEventListener('touchend', function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
   })();
 
-  /* ── Nuevo Slider: Compromiso de Transparencia ── */
+  /* ── Slider: Compromiso de Transparencia ── */
   (function() {
     const slider = document.getElementById('transparenciaSlider');
     const hint   = document.getElementById('slider-hint-transparencia');
@@ -655,8 +655,8 @@
         hint.style.color = '#fff';
         setTimeout(function() {
           const a = document.createElement('a');
-          a.href = 'Compromiso_Transparencia_Matrix.pdf';
-          a.download = 'Compromiso_Transparencia_Matrix.pdf';
+          a.href = 'TRANSPARENCIA.pdf';
+          a.download = 'TRANSPARENCIA.pdf';
           a.click();
         }, 250);
         setTimeout(function() {
@@ -673,4 +673,10 @@
       }
     });
 
-    slider.addEventListener('mouseup',  function() { if (!triggered) { this.value = 0; updateTrack(0);
+    slider.addEventListener('mouseup',  function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
+    slider.addEventListener('touchend', function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
+  })();
+</script>
+
+</body>
+</html>
