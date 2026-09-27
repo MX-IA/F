@@ -292,77 +292,6 @@
       box-shadow: 0 2px 12px rgba(0,59,111,.15);
     }
 
-    /* formulario */
-    .form-card {
-      background: #fff;
-      border: 1.5px solid #dde5f0;
-      border-radius: var(--radius);
-      padding: 1.4rem 1.2rem;
-    }
-    .form-card h2 {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--azul);
-      margin-bottom: 1rem;
-    }
-    .form-card label {
-      display: block;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--gris);
-      margin-bottom: .25rem;
-    }
-    .form-card input,
-    .form-card textarea {
-      width: 100%;
-      padding: .65rem .85rem;
-      border: 1.5px solid #cdd6e4;
-      border-radius: 7px;
-      font-family: inherit;
-      font-size: .9rem;
-      color: var(--texto);
-      background: var(--claro);
-      margin-bottom: .85rem;
-      outline: none;
-      transition: border-color .15s;
-    }
-    .form-card input:focus,
-    .form-card textarea:focus { border-color: var(--azul2); background: #fff; }
-    .form-card textarea { resize: vertical; min-height: 80px; }
-    .btn-send {
-      width: 100%;
-      padding: .85rem;
-      background: var(--dorado);
-      color: #fff;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: .05em;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: opacity .15s;
-    }
-    .btn-send:active { opacity: .85; }
-    .form-note {
-      font-size: .75rem;
-      color: var(--gris);
-      text-align: center;
-      margin-top: .6rem;
-    }
-    #form-ok {
-      display: none;
-      background: #e8f9ef;
-      color: #1a7a3c;
-      border-radius: 8px;
-      padding: .75rem 1rem;
-      font-size: .88rem;
-      font-weight: 600;
-      text-align: center;
-      margin-top: .7rem;
-    }
-
     /* pie */
     footer {
       background: var(--azul);
@@ -385,16 +314,6 @@
       gap: .8rem;
       border-top: 1px solid rgba(255,255,255,.1);
       border-bottom: 1px solid rgba(255,255,255,.1);
-    }
-    /* Estilo especial para el slider de transparencia (fondo dorado) */
-    .manual-slider-wrap.transparencia {
-      background: var(--dorado);
-    }
-    .manual-slider-wrap.transparencia .manual-icon-wrap svg {
-      stroke: #fff;
-    }
-    .manual-slider-wrap.transparencia .slider-hint {
-      color: rgba(255,255,255,.8);
     }
     .manual-slider-left {
       display: flex;
@@ -534,27 +453,6 @@
   </div>
 </div>
 
-<!-- BARRA: COMPROMISO DE TRANSPARENCIA -->
-<div class="manual-slider-wrap transparencia">
-  <div class="manual-slider-left">
-    <div class="manual-icon-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        <path d="M12 8v4"/>
-        <path d="M12 16h.01"/>
-      </svg>
-    </div>
-    <div class="manual-labels">
-      <span class="ml-title">Compromiso de Transparencia</span>
-      <span class="ml-sub">Desliza para conocer nuestra política</span>
-    </div>
-  </div>
-  <div class="slider-track-wrap">
-    <span class="slider-hint" id="slider-hint-transparencia">← desliza</span>
-    <input type="range" class="manual-range" id="transparenciaSlider" min="0" max="100" value="0" />
-  </div>
-</div>
-
 <!-- CONTENIDO PRINCIPAL -->
 <main>
 
@@ -644,19 +542,6 @@
     <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https://mx-ia.github.io/F/" alt="QR Matrix de Colombia" />
   </section>
 
-  <!-- Formulario asesoría -->
-  <section class="form-card">
-    <h2>¡Agenda tu Asesoría Gratuita!</h2>
-    <label for="nombre">Nombre completo</label>
-    <input type="text" id="nombre" placeholder="Tu nombre" autocomplete="name" />
-    <label for="celular">Número de celular</label>
-    <input type="tel" id="celular" placeholder="300 000 0000" autocomplete="tel" />
-    <label for="mensaje">Mensaje (opcional)</label>
-    <textarea id="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
-    <button class="btn-send" onclick="enviarAsesoria()">ENVIAR Y AGENDAR ASESORÍA</button>
-    <p class="form-note">Te contactaremos lo más pronto posible.<br>Email: <strong>matrixdecolombia@gmail.com</strong></p>
-    <div id="form-ok">✅ ¡Mensaje enviado! Pronto te contactamos.</div>
-  </section>
 
 </main>
 
@@ -667,19 +552,6 @@
 </footer>
 
 <script>
-  function enviarAsesoria() {
-    const nombre  = document.getElementById('nombre').value.trim();
-    const celular = document.getElementById('celular').value.trim();
-    const mensaje = document.getElementById('mensaje').value.trim();
-    if (!nombre || !celular) {
-      alert('Por favor ingresa tu nombre y número de celular.');
-      return;
-    }
-    const texto = `Hola, soy ${nombre} (${celular}). ${mensaje ? 'Mensaje: ' + mensaje : 'Quiero agendar una asesoría gratuita.'}`;
-    window.open('https://wa.me/573003468551?text=' + encodeURIComponent(texto), '_blank');
-    document.getElementById('form-ok').style.display = 'block';
-  }
-
   /* ── Gate de datos previos a la descarga ── */
   (function() {
     const nombre    = document.getElementById('gNombre');
@@ -758,47 +630,6 @@
     slider.addEventListener('touchend', function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
   })();
 
-  /* ── Slider: Compromiso de Transparencia ── */
-  (function() {
-    const slider = document.getElementById('transparenciaSlider');
-    const hint   = document.getElementById('slider-hint-transparencia');
-    let triggered = false;
-
-    function updateTrack(val) {
-      slider.style.setProperty('--pct', val + '%');
-      slider.classList.add('filled');
-    }
-
-    slider.addEventListener('input', function() {
-      const val = parseInt(this.value);
-      updateTrack(val);
-      if (val >= 80 && !triggered) {
-        triggered = true;
-        hint.textContent = '¡Descargando!';
-        hint.style.color = '#fff';
-        setTimeout(function() {
-          const a = document.createElement('a');
-          a.href = 'TRANSPARENCIA.pdf';
-          a.download = 'TRANSPARENCIA.pdf';
-          a.click();
-        }, 250);
-        setTimeout(function() {
-          slider.value = 0;
-          updateTrack(0);
-          triggered = false;
-          hint.textContent = '← desliza';
-          hint.style.color = '';
-        }, 1800);
-      } else if (val < 80) {
-        triggered = false;
-        hint.textContent = val > 40 ? '¡casi!' : '← desliza';
-        hint.style.color = '';
-      }
-    });
-
-    slider.addEventListener('mouseup',  function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
-    slider.addEventListener('touchend', function() { if (!triggered) { this.value = 0; updateTrack(0); hint.textContent = '← desliza'; hint.style.color = ''; } });
-  })();
 </script>
 
 </body>
