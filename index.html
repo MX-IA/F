@@ -172,16 +172,84 @@
       font-weight: 700;
       letter-spacing: .04em;
       border-radius: 8px;
+      border: none;
+      cursor: pointer;
       text-decoration: none;
-      transition: opacity .15s, transform .15s;
+      transition: opacity .15s, transform .15s, filter .15s;
     }
     .btn-download:active { opacity: .88; transform: scale(.98); }
+    .btn-download:disabled {
+      cursor: not-allowed;
+      filter: grayscale(.35);
+      opacity: .55;
+      transform: none;
+    }
     .btn-note {
       text-align: center;
       font-size: .72rem;
       color: var(--gris);
       margin-top: .55rem;
     }
+
+    /* ── DATOS PREVIOS A LA DESCARGA ── */
+    .gate {
+      background: var(--claro);
+      border: 1.5px dashed #c9d5e6;
+      border-radius: 10px;
+      padding: 1rem 1rem 1.1rem;
+      margin-bottom: 1.1rem;
+    }
+    .gate-title {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: .7rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .gate label.gate-label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--gris);
+      margin-bottom: .22rem;
+    }
+    .gate input[type="text"],
+    .gate input[type="tel"] {
+      width: 100%;
+      padding: .6rem .8rem;
+      border: 1.5px solid #cdd6e4;
+      border-radius: 7px;
+      font-family: inherit;
+      font-size: .88rem;
+      color: var(--texto);
+      background: #fff;
+      margin-bottom: .7rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    .gate input[type="text"]:focus,
+    .gate input[type="tel"]:focus { border-color: var(--azul2); }
+    .gate-check {
+      display: flex;
+      align-items: flex-start;
+      gap: .5rem;
+      font-size: .78rem;
+      color: var(--texto);
+      line-height: 1.4;
+      cursor: pointer;
+      user-select: none;
+    }
+    .gate-check input[type="checkbox"] {
+      margin-top: .15rem;
+      width: 17px;
+      height: 17px;
+      accent-color: var(--dorado);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .gate-check a { color: var(--azul2); font-weight: 600; text-decoration: underline; }
 
     /* mapa */
     .map-wrap {
@@ -520,15 +588,34 @@
         <p>Doble clic en el programa</p>
       </div>
     </div>
-    <a class="btn-download" href="https://github.com/mx-ia/F/releases/latest/download/sistema.zip">
+    <div class="gate">
+      <div class="gate-title">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--azul)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 7-7h2a7 7 0 0 1 7 7v1"/>
+        </svg>
+        Antes de descargar, cuéntanos quién eres
+      </div>
+      <label class="gate-label" for="gNombre">Nombre completo</label>
+      <input type="text" id="gNombre" placeholder="Tu nombre" autocomplete="name" />
+      <label class="gate-label" for="gCelular">Número de celular</label>
+      <input type="tel" id="gCelular" placeholder="300 000 0000" autocomplete="tel" />
+      <label class="gate-label" for="gOcupacion">Ocupación</label>
+      <input type="text" id="gOcupacion" placeholder="Ej. Contador, Gerente, Comerciante" autocomplete="organization-title" />
+      <label class="gate-check">
+        <input type="checkbox" id="gTerminos" />
+        <span>He leído y acepto los <a href="TRANSPARENCIA.pdf" target="_blank" rel="noopener">Términos de Descarga y Licencia</a>.</span>
+      </label>
+    </div>
+
+    <button class="btn-download" id="btnDescargar" disabled>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7 10 12 15 17 10"/>
         <line x1="12" y1="15" x2="12" y2="3"/>
       </svg>
       DESCARGAR SISTEMA MATRIX
-    </a>
-    <p class="btn-note">Windows 10 / 11 · Portable, sin instalador · Tus datos quedan en tu PC</p>
+    </button>
+    <p class="btn-note" id="gate-note">Completa tus datos y acepta los términos para habilitar la descarga.</p>
   </section>
 
   <!-- Ubicación -->
@@ -592,6 +679,42 @@
     window.open('https://wa.me/573003468551?text=' + encodeURIComponent(texto), '_blank');
     document.getElementById('form-ok').style.display = 'block';
   }
+
+  /* ── Gate de datos previos a la descarga ── */
+  (function() {
+    const nombre    = document.getElementById('gNombre');
+    const celular   = document.getElementById('gCelular');
+    const ocupacion = document.getElementById('gOcupacion');
+    const terminos  = document.getElementById('gTerminos');
+    const btn       = document.getElementById('btnDescargar');
+    const note      = document.getElementById('gate-note');
+
+    function checkGate() {
+      const ok = nombre.value.trim() && celular.value.trim() && ocupacion.value.trim() && terminos.checked;
+      btn.disabled = !ok;
+      note.textContent = ok
+        ? 'Windows 10 / 11 · Portable, sin instalador · Tus datos quedan en tu PC'
+        : 'Completa tus datos y acepta los términos para habilitar la descarga.';
+    }
+    [nombre, celular, ocupacion].forEach(function(el) { el.addEventListener('input', checkGate); });
+    terminos.addEventListener('change', checkGate);
+
+    btn.addEventListener('click', function() {
+      if (btn.disabled) return;
+
+      // Registra el lead por WhatsApp (mismo canal usado para agendar asesorías)
+      const texto = `Descarga de SISTEMA MATRIX — Nombre: ${nombre.value.trim()}, Celular: ${celular.value.trim()}, Ocupación: ${ocupacion.value.trim()}`;
+      window.open('https://wa.me/573003468551?text=' + encodeURIComponent(texto), '_blank');
+
+      // Dispara la descarga del software
+      const a = document.createElement('a');
+      a.href = 'https://github.com/mx-ia/F/releases/latest/download/sistema.zip';
+      a.download = 'sistema.zip';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+  })();
 
   /* ── Slider Manual ── */
   (function() {
