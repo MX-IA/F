@@ -216,7 +216,8 @@
       margin-bottom: .22rem;
     }
     .gate input[type="text"],
-    .gate input[type="tel"] {
+    .gate input[type="tel"],
+    .gate select {
       width: 100%;
       padding: .6rem .8rem;
       border: 1.5px solid #cdd6e4;
@@ -230,7 +231,8 @@
       transition: border-color .15s;
     }
     .gate input[type="text"]:focus,
-    .gate input[type="tel"]:focus { border-color: var(--azul2); }
+    .gate input[type="tel"]:focus,
+    .gate select:focus { border-color: var(--azul2); }
     .gate-check {
       display: flex;
       align-items: flex-start;
@@ -498,7 +500,17 @@
       <label class="gate-label" for="gCelular">Número de celular</label>
       <input type="tel" id="gCelular" placeholder="300 000 0000" autocomplete="tel" />
       <label class="gate-label" for="gOcupacion">Ocupación</label>
-      <input type="text" id="gOcupacion" placeholder="Ej. Contador, Gerente, Comerciante" autocomplete="organization-title" />
+      <select id="gOcupacion">
+        <option value="" disabled selected>Selecciona una opción</option>
+        <option value="Financiero/Contable">Financiero / Contable</option>
+        <option value="Gerencia/Direccion">Gerencia / Dirección</option>
+        <option value="Comercial/Ventas">Comercial / Ventas</option>
+        <option value="Operaciones/Produccion">Operaciones / Producción</option>
+        <option value="Independiente/Comerciante">Independiente / Comerciante</option>
+        <option value="Ama de casa">Ama de casa</option>
+        <option value="Estudiante">Estudiante</option>
+        <option value="Otro">Otro</option>
+      </select>
       <label class="gate-check">
         <input type="checkbox" id="gTerminos" />
         <span>He leído y acepto los <a href="TRANSPARENCIA.pdf" target="_blank" rel="noopener">Términos de Descarga y Licencia</a>.</span>
@@ -574,8 +586,17 @@
     btn.addEventListener('click', function() {
       if (btn.disabled) return;
 
+      const datosNombre    = nombre.value.trim();
+      const datosCelular   = celular.value.trim();
+      const datosOcupacion = ocupacion.value;
+
+      // Guarda el lead directo en tu backend, sin depender de que se complete el envío por WhatsApp
+      const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbxGruzPgI8H6SzpgHN3i8JhYl_Jhhhmj2a4yw2kMZ6-lZ_1y9gUNHAUZs1CR1yab40H/exec';
+      const params = new URLSearchParams({ nombre: datosNombre, celular: datosCelular, ocupacion: datosOcupacion });
+      fetch(BACKEND_URL + '?' + params.toString(), { mode: 'no-cors' }).catch(function() {});
+
       // Registra el lead por WhatsApp (mismo canal usado para agendar asesorías)
-      const texto = `Descarga de SISTEMA MATRIX — Nombre: ${nombre.value.trim()}, Celular: ${celular.value.trim()}, Ocupación: ${ocupacion.value.trim()}`;
+      const texto = `Descarga de SISTEMA MATRIX — Nombre: ${datosNombre}, Celular: ${datosCelular}, Ocupación: ${datosOcupacion}`;
       window.open('https://wa.me/573003468551?text=' + encodeURIComponent(texto), '_blank');
 
       // Dispara la descarga del software
